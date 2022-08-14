@@ -1,0 +1,22 @@
+version: '3.7'
+
+services:
+
+  php-debug:
+    image: php:debug
+    extra_hosts:
+      - "host.docker.internal:172.17.0.1"
+    volumes:
+      - ./app.php:/var/www/html/app.php
+    command: /bin/bash -c "php -f app.php"
+    networks:
+      - app_net
+
+networks:
+  app_net:
+    driver: bridge
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.17.0.1/24"
+      
